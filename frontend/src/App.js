@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GuestList from "./pages/GuestList"; 
 
-// Import video and image from assets
+// Import video from assets
 import video from "../src/asset/video.mp4";  
-import Back from "../src/asset/Back1.jpg";  
 
 const App = () => {
   const [timeLeft, setTimeLeft] = useState({});
@@ -54,10 +53,18 @@ const App = () => {
     }
   };
 
+  const handleViewGuests = (navigate) => {
+    const password = prompt("Enter the admin password:");
+    if (password === "my wedding") {
+      navigate("/guests");
+    } else {
+      alert("Incorrect password! Access denied.");
+    }
+  };
+
   return (
     <Router>
       <div style={mainContainerStyle}>
-        <div style={blurredBackgroundStyle}></div>
         <div style={contentStyle}>
           <Routes>
             <Route
@@ -74,22 +81,22 @@ const App = () => {
                     <source src={video} type="video/mp4" />
                   </video>
 
-                  <h1 style={{ fontSize: "2rem", color: "#8C0000", textAlign: "center", fontWeight: "bold" }}>
+                  <h1 style={{ fontSize: "2rem", color: "#000000", textAlign: "center", fontWeight: "bold" }}>
                     Days until our special day
                   </h1>
-                  <p style={{ textAlign: "center", color: "white", fontSize: "1.125rem" }}>
-                    <span style={{ fontSize: "1.85rem", color: "#FF204E", fontWeight: "bold", marginRight: "0.5rem" }}>
+                  <p style={{ textAlign: "center", color: "black", fontSize: "1.125rem" }}>
+                    <span style={{ fontSize: "1.85rem", color: "#000000", fontWeight: "bold", marginRight: "0.5rem" }}>
                       {timeLeft.days} Days
                     </span>
-                    <span style={{ fontSize: "1.85rem", color: "#F94C10", fontWeight: "bold", marginRight: "0.5rem" }}>
+                    <span style={{ fontSize: "1.85rem", color: "#000000", fontWeight: "bold", marginRight: "0.5rem" }}>
                       {timeLeft.hours} Hours
                     </span>
-                    <span style={{ fontSize: "1.85rem", color: "#006769", fontWeight: "bold" }}>
+                    <span style={{ fontSize: "1.85rem", color: "#000000", fontWeight: "bold" }}>
                       {timeLeft.minutes} Minutes
                     </span>
                   </p>
 
-                  <h2 style={{ fontSize: "2rem", color: "#FF6500", textAlign: "center", fontWeight: "bold" }}>
+                  <h2 style={{ fontSize: "2rem", color: "#000000", textAlign: "center", fontWeight: "bold" }}>
                     Our story isn’t complete without you! Will you be joining us?
                     <br />RSVP by April 5, 2025.
                   </h2>
@@ -135,10 +142,7 @@ const App = () => {
                       >
                         <option value="" disabled>Select Food Preference</option>
                         <option value="Vegetarian">Vegetarian</option>
-                        <option value="Vegan">Vegan</option>
-                        <option value="Halal">Halal</option>
-                        <option value="Gluten-Free">Gluten-Free</option>
-                        <option value="Nut-Free">Nut-Free</option>
+                        <option value="Vegan">Non-Vegetarian</option>
                       </select>
                       <button type="submit" style={buttonStyle}>
                         Submit
@@ -147,9 +151,7 @@ const App = () => {
                   )}
 
                   <br />
-                  <Link to="/guests">
-                    <button style={buttonStyle}>View Guests</button>
-                  </Link>
+                  <NavigateWithPassword handleViewGuests={handleViewGuests} />
                   <ToastContainer />
                 </>
               }
@@ -162,6 +164,15 @@ const App = () => {
   );
 };
 
+const NavigateWithPassword = ({ handleViewGuests }) => {
+  const navigate = useNavigate();
+  return (
+    <button onClick={() => handleViewGuests(navigate)} style={buttonStyle}>
+      View Guests
+    </button>
+  );
+};
+
 // Style for the main container
 const mainContainerStyle = {
   position: "relative",
@@ -171,20 +182,7 @@ const mainContainerStyle = {
   alignItems: "center",
   textAlign: "center",
   color: "#fff",
-};
-
-// Style for the blurred background
-const blurredBackgroundStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundImage: `url(${Back})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  filter: "blur(8px)",
-  zIndex: "-1",
+  backgroundColor: "white",
 };
 
 // Style for the content container
@@ -211,7 +209,7 @@ const videoStyle = {
 const buttonStyle = {
   padding: "10px 20px",
   margin: "10px",
-  backgroundColor: "#0B2F9F",
+  backgroundColor: "#FE4F2D",
   color: "#fff",
   border: "none",
   borderRadius: "5px",
@@ -230,7 +228,7 @@ const inputStyle = {
 // Style for the form container
 const formStyle = {
   marginTop: "20px",
-  textAlign: "center",
+  textAlign: "center", 
 };
 
 export default App;
