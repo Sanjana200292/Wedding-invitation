@@ -54,8 +54,8 @@ const App = () => {
   };
 
   const handleViewGuests = (navigate) => {
-    const password = prompt("Enter the admin password:");
-    if (password === "my wedding") {
+    const password = prompt("This is visible for only admin enter the admin password:");
+    if (password === "admin") {
       navigate("/guests");
     } else {
       alert("Incorrect password! Access denied.");
@@ -142,7 +142,7 @@ const App = () => {
                       >
                         <option value="" disabled>Select Food Preference</option>
                         <option value="Vegetarian">Vegetarian</option>
-                        <option value="Vegan">Non-Vegetarian</option>
+                        <option value="Non Vegetarian">Non Vegetarian</option>
                       </select>
                       <button type="submit" style={buttonStyle}>
                         Submit
@@ -209,7 +209,7 @@ const videoStyle = {
 const buttonStyle = {
   padding: "10px 20px",
   margin: "10px",
-  backgroundColor: "#FE4F2D",
+  backgroundColor: "#E85C0D",
   color: "#fff",
   border: "none",
   borderRadius: "5px",

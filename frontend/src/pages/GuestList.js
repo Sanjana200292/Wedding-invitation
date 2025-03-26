@@ -4,12 +4,21 @@ import { Link } from "react-router-dom";
 
 const GuestList = () => {
   const [guests, setGuests] = useState([]);
+  const [vegCount, setVegCount] = useState(0);
+  const [nonVegCount, setNonVegCount] = useState(0);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/guests")
       .then((response) => {
         setGuests(response.data);
+
+        // Calculate counts for Vegetarian and Non-Vegetarian
+        const veg = response.data.filter((guest) => guest.foodPreference === "Vegetarian").length;
+        const nonVeg = response.data.filter((guest) => guest.foodPreference === "Non Vegetarian").length;
+
+        setVegCount(veg);
+        setNonVegCount(nonVeg);
       })
       .catch((error) => {
         console.error("Error fetching guests:", error);
@@ -21,8 +30,13 @@ const GuestList = () => {
       <h2 style={{ marginBottom: "10px", fontSize: "28px", color: "#333", fontWeight: "bold" }}>Guest List</h2>
 
       {/* Display Guest Count */}
-      <p style={{ fontSize: "18px", fontWeight: "bold", color: "#690B22", marginBottom: "20px" }}>
-        Number of Guests: {guests.length}
+      <p style={{ fontSize: "18px", fontWeight: "bold", color: "#000000", marginBottom: "10px" }}>
+        Total Guests: {guests.length}
+      </p>
+
+      {/* Display Food Preference Count */}
+      <p style={{ fontSize: "16px", fontWeight: "bold", color: "#000000", marginBottom: "20px" }}>
+        Vegetarian: {vegCount} <br/> Non-Vegetarian: {nonVegCount}
       </p>
 
       <Link to="/">
