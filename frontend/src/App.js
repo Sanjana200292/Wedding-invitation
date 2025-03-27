@@ -98,7 +98,7 @@ const App = () => {
 
                   <h2 style={{ fontSize: "2rem", color: "#000000", textAlign: "center", fontWeight: "bold" }}>
                     Our story isn’t complete without you! Will you be joining us?
-                    <br />RSVP by April 5, 2025.
+                    <br />RSVP by April 10, 2025.
                   </h2>
 
                   <div>
